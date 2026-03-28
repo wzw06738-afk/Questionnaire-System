@@ -6,6 +6,9 @@
   "private": true,
   "license": "UNLICENSED",
   "scripts": {
+    "sync-config": "node ../scripts/sync-config.js",
+    "prestart": "npm run sync-config",
+    "prestart:dev": "npm run sync-config",
     "build": "nest build",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
     "start": "nest start",

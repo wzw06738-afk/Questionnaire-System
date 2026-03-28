@@ -56,7 +56,8 @@ const StatHeader: FC = () => {
     if (!isPublished) return null
 
     // 拼接 url ，需要参考 C 端的规则
-    const url = `http://192.168.0.151:3000/question/${id}`
+    const lanIp = process.env.REACT_APP_LAN_IP || '127.0.0.1'
+    const url = `http://${lanIp}:3000/question/${id}`
 
     // 定义二维码组件
     const QRCodeElem = (
