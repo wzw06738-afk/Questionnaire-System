@@ -59,7 +59,10 @@ npm run dev
 
 ## 📝 开发者备注
 
-- **局域网测试**：本项目已集成自动同步脚本。当您在 [GLOBAL_CONFIG.json](file:///d%3A/%E9%97%AE%E5%8D%B7%E7%B3%BB%E7%BB%9F/GLOBAL_CONFIG.json) 中配置好 `LAN_IP` 后，启动项目即可自动生成适配该 IP 的二维码和发布链接。
-- **数据库查看**：推荐使用 **MongoDB Compass** 连接 `mongodb://localhost:27017`（如果在同一台电脑运行）或 `mongodb://<LAN_IP>:27017`（如果 MongoDB 允许局域网连接）查看 `wenjuan` 数据库下的 `users`、`questions` 和 `answers` 集合。
+- **局域网测试**：目前发布 URL 已配置为您的局域网 IP (`192.168.0.151`)，确保同一 WiFi 下的移动设备可以扫码测试。
+- **数据库查看**：推荐使用 **MongoDB Compass** 连接 `mongodb://192.168.0.151:27017` 查看 `wenjuan` 数据库下的 `users`、`questions` 和 `answers` 集合。
 
 
+<img width="1179" height="2556" alt="IMG_2998" src="https://github.com/user-attachments/assets/5dab7bca-51c0-4215-b5f9-cc63cf0c7c99" />
+
+<img width="2559" height="1366" alt="屏幕截图 2026-03-28 110634" src="https://github.com/user-attachments/assets/8586e633-fd19-4781-8870-aa000d2906e8" />
