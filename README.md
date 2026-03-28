@@ -54,3 +54,8 @@ npm run dev
 
 - **局域网测试**：目前发布 URL 已配置为您的局域网 IP (`192.168.0.151`)，确保同一 WiFi 下的移动设备可以扫码测试。
 - **数据库查看**：推荐使用 **MongoDB Compass** 连接 `mongodb://192.168.0.151:27017` 查看 `wenjuan` 数据库下的 `users`、`questions` 和 `answers` 集合。
+
+
+<img width="1179" height="2556" alt="IMG_2998" src="https://github.com/user-attachments/assets/5dab7bca-51c0-4215-b5f9-cc63cf0c7c99" />
+
+<img width="2559" height="1366" alt="屏幕截图 2026-03-28 110634" src="https://github.com/user-attachments/assets/8586e633-fd19-4781-8870-aa000d2906e8" />
