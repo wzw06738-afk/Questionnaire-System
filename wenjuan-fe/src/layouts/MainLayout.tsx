@@ -1,4 +1,4 @@
-import React, { FC } from 'react'
+import React, { FC, Suspense } from 'react'
 import { Outlet } from 'react-router-dom'
 import { Layout, Spin } from 'antd'
 import Logo from '../components/Logo'
@@ -30,7 +30,15 @@ const MainLayout: FC = () => {
               <Spin />
             </div>
           ) : (
-            <Outlet />
+            <Suspense
+              fallback={
+                <div style={{ textAlign: 'center', marginTop: '60px' }}>
+                  <Spin />
+                </div>
+              }
+            >
+              <Outlet />
+            </Suspense>
           )}
         </Content>
       </Layout>

@@ -1,4 +1,4 @@
-import React, { FC } from 'react'
+import React, { FC, Suspense } from 'react'
 import { Spin } from 'antd'
 import { Outlet } from 'react-router-dom'
 import useLoadUserData from '../hooks/useLoadUserData'
@@ -17,7 +17,15 @@ const QuestionLayout: FC = () => {
           <Spin />
         </div>
       ) : (
-        <Outlet />
+        <Suspense
+          fallback={
+            <div style={{ textAlign: 'center', marginTop: '60px' }}>
+              <Spin />
+            </div>
+          }
+        >
+          <Outlet />
+        </Suspense>
       )}
     </div>
   )

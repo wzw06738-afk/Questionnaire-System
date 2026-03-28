@@ -1,5 +1,6 @@
-import React, { lazy } from 'react'
+import React, { lazy, Suspense } from 'react'
 import { createBrowserRouter } from 'react-router-dom'
+import { Spin } from 'antd'
 
 import MainLayout from '../layouts/MainLayout'
 import ManageLayout from '../layouts/ManageLayout'
@@ -17,6 +18,13 @@ import Star from '../pages/manage/Star'
 // 路由懒加载，拆分 bundle ，优化首页体积
 const Edit = lazy(() => import(/* webpackChunkName: "editPage" */ '../pages/question/Edit'))
 const Stat = lazy(() => import(/* webpackChunkName: "statPage" */ '../pages/question/Stat'))
+
+// 提取一个简单的加载中组件
+const Loading = (
+  <div style={{ textAlign: 'center', marginTop: '60px' }}>
+    <Spin />
+  </div>
+)
 
 const router = createBrowserRouter([
   {
@@ -65,11 +73,19 @@ const router = createBrowserRouter([
     children: [
       {
         path: 'edit/:id',
-        element: <Edit />,
+        element: (
+          <Suspense fallback={Loading}>
+            <Edit />
+          </Suspense>
+        ),
       },
       {
         path: 'stat/:id', // statistic 统计
-        element: <Stat />,
+        element: (
+          <Suspense fallback={Loading}>
+            <Stat />
+          </Suspense>
+        ),
       },
     ],
   },
