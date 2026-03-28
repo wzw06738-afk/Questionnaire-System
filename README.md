@@ -65,13 +65,22 @@ npm run dev
 
 ## 展示结果
 **登录页面（H5）展示：**
+<img width="2552" height="1296" alt="屏幕截图 2026-03-28 134954" src="https://github.com/user-attachments/assets/458094ea-f1bf-4255-aba2-9fef6014444d" />
+
+
+**问卷管理页面展示：**
+<img width="2557" height="1298" alt="屏幕截图 2026-03-28 135116" src="https://github.com/user-attachments/assets/3a1d1e9f-f788-465a-a77f-7d58c215c918" />
 
 
 **pc端填写问卷页面（H5）展示：**
 <img width="2559" height="1366" alt="屏幕截图 2026-03-28 110634" src="https://github.com/user-attachments/assets/8586e633-fd19-4781-8870-aa000d2906e8" />
 
+
 **移动端填写问卷页面（H5）展示：**
 <img width="1179" height="2556" alt="IMG_2998" src="https://github.com/user-attachments/assets/5dab7bca-51c0-4215-b5f9-cc63cf0c7c99" />
 
+
+**问卷统计页面展示：**
+<img width="2554" height="1301" alt="image" src="https://github.com/user-attachments/assets/45046991-f97b-4a2d-856b-c25c65db457f" />
 
 
