@@ -24,7 +24,7 @@ cd wenjuan-server
 npm install
 npm run start
 ```
-后端将运行在 `http://localhost:3005`。
+后端将运行在 `http://192.168.0.151:3005`。
 
 ### 3. 启动管理端 (wenjuan-fe)
 ```bash
@@ -32,7 +32,7 @@ cd wenjuan-fe
 npm install
 npm start
 ```
-管理端将运行在 `http://localhost:8000`。
+管理端将运行在 `http://192.168.0.151:8000`。
 
 ### 4. 启动填写端 (wenjuan-client)
 ```bash
@@ -40,7 +40,7 @@ cd wenjuan-client
 npm install
 npm run dev
 ```
-填写端将运行在 `http://localhost:3000`。
+填写端将运行在 `http://192.168.0.151:3000`。
 
 ## 🛠️ 核心功能
 
@@ -52,5 +52,5 @@ npm run dev
 
 ## 📝 开发者备注
 
-- **局域网测试**：目前发布 URL 已配置为您的局域网 IP (`  .  .  .  `)，确保同一 WiFi 下的移动设备可以扫码测试。
-- **数据库查看**：推荐使用 **MongoDB Compass** 连接 `mongodb://localhost:27017` 查看 `wenjuan` 数据库下的 `users`、`questions` 和 `answers` 集合。
+- **局域网测试**：目前发布 URL 已配置为您的局域网 IP (`192.168.0.151`)，确保同一 WiFi 下的移动设备可以扫码测试。
+- **数据库查看**：推荐使用 **MongoDB Compass** 连接 `mongodb://192.168.0.151:27017` 查看 `wenjuan` 数据库下的 `users`、`questions` 和 `answers` 集合。

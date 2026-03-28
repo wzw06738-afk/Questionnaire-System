@@ -1,5 +1,5 @@
 
-const HOST = 'http://10.8.130.47:3005' // 真实的 NestJS 后端
+const HOST = 'http://192.168.0.151:3005' // 真实的 NestJS 后端
 
 export async function get(url: string) {
   console.log('Fetching URL:', `${HOST}${url}`)

@@ -13,7 +13,7 @@ async function bootstrap() {
   // 解析 application/json
   app.use(bodyParser.json());
   
-  await app.listen(3005, '0.0.0.0');
-  console.log('Application is running on: http://localhost:3005');
+  await app.listen(3005, '192.168.0.151');
+  console.log('Application is running on: http://192.168.0.151:3005');
 }
 bootstrap();

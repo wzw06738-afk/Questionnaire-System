@@ -34,7 +34,7 @@ module.exports = {
   devServer: {
     port: 8000, // B 端，前端
     proxy: {
-      '/api': 'http://10.8.130.47:3005', // 真实的 NestJS 后端
+      '/api': 'http://192.168.0.151:3005', // 真实的 NestJS 后端
     },
   },
 }

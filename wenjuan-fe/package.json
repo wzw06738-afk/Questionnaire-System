@@ -34,7 +34,7 @@
     "web-vitals": "^2.1.4"
   },
   "scripts": {
-    "start": "set HOST=0.0.0.0 && craco start",
+    "start": "set HOST=192.168.0.151&& craco start",
     "build": "craco build",
     "eject": "react-scripts eject",
     "lint": " eslint 'src/**/*.+(js|ts|jsx|tsx)' ",
