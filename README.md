@@ -13,34 +13,41 @@
 
 ## 🚀 快速开始
 
-### 1. 准备工作
+### 1. 配置网络 (重点)
+本项目支持一键配置局域网 IP。当您切换 WiFi 或网络环境时，只需修改根目录下的 `GLOBAL_CONFIG.json` 文件：
+
+1. 打开根目录下的 [GLOBAL_CONFIG.json](file:///d%3A/%E9%97%AE%E5%8D%B7%E7%B3%BB%E7%BB%9F/GLOBAL_CONFIG.json)。
+2. 将 `LAN_IP` 修改为您当前的局域网 IP（可通过 `ipconfig` 查看）。
+3. 启动项目时，系统会自动同步该配置到所有子模块。
+
+### 2. 准备工作
 确保本地已安装并启动以下环境：
 - **Node.js** (推荐 v16+)
-- **MongoDB** (默认端口 27017)
+- **MongoDB** (默认端口 27017，推荐绑定到 `127.0.0.1`)
 
-### 2. 启动后端 (wenjuan-server)
+### 3. 启动后端 (wenjuan-server)
 ```bash
 cd wenjuan-server
 npm install
 npm run start
 ```
-后端将运行在 `http://192.168.0.151:3005`。
+后端将根据配置运行在 `http://<LAN_IP>:3005`。
 
-### 3. 启动管理端 (wenjuan-fe)
+### 4. 启动管理端 (wenjuan-fe)
 ```bash
 cd wenjuan-fe
 npm install
 npm start
 ```
-管理端将运行在 `http://192.168.0.151:8000`。
+管理端将根据配置运行在 `http://<LAN_IP>:8000`。
 
-### 4. 启动填写端 (wenjuan-client)
+### 5. 启动填写端 (wenjuan-client)
 ```bash
 cd wenjuan-client
 npm install
 npm run dev
 ```
-填写端将运行在 `http://192.168.0.151:3000`。
+填写端将根据配置运行在 `http://<LAN_IP>:3000`。
 
 ## 🛠️ 核心功能
 
@@ -52,7 +59,7 @@ npm run dev
 
 ## 📝 开发者备注
 
-- **局域网测试**：目前发布 URL 已配置为您的局域网 IP (`192.168.0.151`)，确保同一 WiFi 下的移动设备可以扫码测试。
-- **数据库查看**：推荐使用 **MongoDB Compass** 连接 `mongodb://192.168.0.151:27017` 查看 `wenjuan` 数据库下的 `users`、`questions` 和 `answers` 集合。
+- **局域网测试**：本项目已集成自动同步脚本。当您在 [GLOBAL_CONFIG.json](file:///d%3A/%E9%97%AE%E5%8D%B7%E7%B3%BB%E7%BB%9F/GLOBAL_CONFIG.json) 中配置好 `LAN_IP` 后，启动项目即可自动生成适配该 IP 的二维码和发布链接。
+- **数据库查看**：推荐使用 **MongoDB Compass** 连接 `mongodb://localhost:27017`（如果在同一台电脑运行）或 `mongodb://<LAN_IP>:27017`（如果 MongoDB 允许局域网连接）查看 `wenjuan` 数据库下的 `users`、`questions` 和 `answers` 集合。
 
 
