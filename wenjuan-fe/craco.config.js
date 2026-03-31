@@ -6,7 +6,13 @@ module.exports = {
       if (webpackConfig.mode === 'production') {
         // 分析 bundle 大小
         if (process.env.ANALYZER === 'true') {
-          webpackConfig.plugins.push(new BundleAnalyzerPlugin())
+          webpackConfig.plugins = (webpackConfig.plugins || []).concat([
+            new BundleAnalyzerPlugin({
+              analyzerMode: 'server',
+              analyzerPort: 8888,
+              openAnalyzer: true,
+            }),
+          ])
         }
 
         // 抽离公共代码，只在生产环境

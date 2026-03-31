@@ -37,6 +37,7 @@
     "sync-config": "node ../scripts/sync-config.js",
     "start": "npm run sync-config && set HOST=0.0.0.0&& craco start",
     "build": "craco build",
+    "build:analyze": "set ANALYZER=true&& craco build",
     "eject": "react-scripts eject",
     "lint": " eslint 'src/**/*.+(js|ts|jsx|tsx)' ",
     "format": " prettier --write 'src/**/*.+(js|ts|jsx|tsx)' ",
