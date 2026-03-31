@@ -86,6 +86,7 @@
     "husky": "^8.0.3",
     "prettier": "^2.8.3",
     "prop-types": "^15.8.1",
-    "webpack": "^5.75.0"
+    "webpack": "^5.75.0",
+    "webpack-bundle-analyzer": "^5.3.0"
   }
 }

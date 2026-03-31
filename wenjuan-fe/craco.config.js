@@ -1,7 +1,14 @@
+const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin
+
 module.exports = {
   webpack: {
     configure(webpackConfig) {
       if (webpackConfig.mode === 'production') {
+        // 分析 bundle 大小
+        if (process.env.ANALYZER === 'true') {
+          webpackConfig.plugins.push(new BundleAnalyzerPlugin())
+        }
+
         // 抽离公共代码，只在生产环境
         if (webpackConfig.optimization == null) {
           webpackConfig.optimization = {}
