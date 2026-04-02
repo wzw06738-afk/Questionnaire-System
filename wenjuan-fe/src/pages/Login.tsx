@@ -3,9 +3,11 @@ import { useNavigate, Link } from 'react-router-dom'
 import { Typography, Space, Form, Input, Button, Checkbox, message } from 'antd'
 import { UserAddOutlined } from '@ant-design/icons'
 import { useRequest } from 'ahooks'
+import { useDispatch } from 'react-redux'
 import { REGISTER_PATHNAME, MANAGE_INDEX_PATHNAME } from '../router'
-import { loginService } from '../services/user'
+import { loginService, getUserInfoService } from '../services/user'
 import { setToken } from '../utils/user-token'
+import { loginReducer } from '../store/userReducer'
 import styles from './Login.module.scss'
 
 const { Title } = Typography
@@ -32,6 +34,7 @@ function getUserInfoFromStorage() {
 
 const Login: FC = () => {
   const nav = useNavigate()
+  const dispatch = useDispatch()
 
   const [form] = Form.useForm() // 第三方 hook
 
@@ -47,9 +50,13 @@ const Login: FC = () => {
     },
     {
       manual: true,
-      onSuccess(result) {
+      async onSuccess(result) {
         const { token = '' } = result
         setToken(token) // 存储 token
+
+        // 关键：登录成功后，立即获取用户信息并存入 Redux
+        const { username, nickname } = await getUserInfoService()
+        dispatch(loginReducer({ username, nickname })) // 存储到 redux store
 
         message.success('登录成功')
         nav(MANAGE_INDEX_PATHNAME) // 导航到“我的问卷”
