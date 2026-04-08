@@ -1,0 +1,50 @@
+@mixin flex-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+@mixin glassmorphism($blur: var(--glass-blur), $bg: var(--bg-card), $border: var(--glass-border)) {
+  background: $bg;
+  backdrop-filter: blur($blur);
+  -webkit-backdrop-filter: blur($blur);
+  border: 1px solid $border;
+}
+
+@mixin transition($property: all, $duration: var(--transition-base), $timing: cubic-bezier(0.4, 0, 0.2, 1)) {
+  transition: $property $duration $timing;
+}
+
+@mixin focus-glow {
+  outline: none;
+  box-shadow: 0 0 0 4px var(--color-primary-glow);
+  border-color: var(--border-focus);
+}
+
+@mixin staggered-reveal($count, $delay: 0.1s) {
+  @for $i from 1 through $count {
+    &:nth-child(#{$i}) {
+      opacity: 0;
+      transform: translateY(20px);
+      animation: reveal 0.5s ease forwards;
+      animation-delay: #{$i * $delay};
+    }
+  }
+}
+
+@keyframes reveal {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@mixin respond-to($breakpoint) {
+  @if $breakpoint == 'mobile' {
+    @media (max-width: 667px) { @content; }
+  } @else if $breakpoint == 'tablet' {
+    @media (max-width: 1366px) { @content; }
+  } @else if $breakpoint == 'desktop' {
+    @media (min-width: 1367px) { @content; }
+  }
+}

@@ -1,8 +1,208 @@
-.container {
-    height: calc(100vh - 64px - 65px);
-    background-color: #fff;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
+@import '../styles/theme';
+@import '../styles/mixins';
+
+.pageWrapper {
+  min-height: 100vh;
+  width: 100%;
+  @include flex-center;
+  background: var(--bg-main);
+  position: relative;
+  overflow: hidden;
+  font-family: $font-family-body;
+  transition: background $transition-base;
+
+  // Animated mesh gradient background
+  &::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle at 20% 30%, rgba(79, 70, 229, 0.15) 0%, transparent 40%),
+                radial-gradient(circle at 80% 70%, rgba(16, 185, 129, 0.1) 0%, transparent 40%),
+                radial-gradient(circle at 50% 50%, rgba(99, 102, 241, 0.1) 0%, transparent 60%);
+    animation: backgroundMove 20s linear infinite;
+    z-index: 0;
+  }
+
+  // Noise texture overlay
+  &::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3%3Ffilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+    opacity: 0.03;
+    pointer-events: none;
+    z-index: 1;
+  }
+}
+
+@keyframes backgroundMove {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.loginCard {
+  @include glassmorphism;
+  padding: space(6);
+  border-radius: $border-radius-xl;
+  width: 100%;
+  max-width: 440px;
+  box-shadow: var(--shadow-xl);
+  z-index: 2;
+  position: relative;
+  
+  @include respond-to('mobile') {
+    max-width: 90%;
+    padding: space(4);
+  }
+
+  header {
+    text-align: center;
+    margin-bottom: space(4);
+    
+    h2 {
+      color: var(--text-main);
+      font-size: $font-size-2xl;
+      font-weight: 700;
+      margin-bottom: space(1);
+      font-family: $font-family-display;
+    }
+    
+    p {
+      color: var(--text-secondary);
+      font-size: $font-size-sm;
+    }
+  }
+}
+
+.themeToggle {
+  position: absolute;
+  top: space(4);
+  right: space(4);
+  z-index: 10;
+}
+
+.formItem {
+  margin-bottom: space(3);
+  
+  :global {
+    .ant-form-item-label > label {
+      color: var(--text-main);
+      font-weight: 500;
+      font-size: $font-size-sm;
+    }
+    
+    .ant-input-affix-wrapper, .ant-input {
+      background: var(--bg-input) !important;
+      border: 1px solid var(--border-color);
+      border-radius: $border-radius-base;
+      padding: space(1.5) space(2);
+      color: var(--text-main);
+      @include transition(all);
+      
+      &:hover {
+        border-color: var(--color-primary);
+      }
+      
+      &:focus, &-focused {
+        @include focus-glow;
+      }
+    }
+    
+    .ant-checkbox-wrapper {
+      color: var(--text-secondary);
+      font-size: $font-size-sm;
+    }
+  }
+}
+
+.submitBtn {
+  width: 100%;
+  height: 48px;
+  background: var(--color-primary);
+  border: none;
+  border-radius: $border-radius-base;
+  color: #fff;
+  font-weight: 600;
+  font-size: $font-size-base;
+  margin-top: space(2);
+  @include transition(all);
+  box-shadow: 0 4px 12px var(--color-primary-glow);
+
+  &:hover {
+    background: var(--color-primary-hover) !important;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px var(--color-primary-glow);
+  }
+  
+  &:active {
+    transform: translateY(0);
+  }
+}
+
+.footerLinks {
+  @include flex-center;
+  justify-content: space-between;
+  margin-top: space(3);
+  font-size: $font-size-sm;
+  
+  a {
+    color: var(--color-primary);
+    text-decoration: none;
+    @include transition(color);
+    
+    &:hover {
+      color: var(--color-primary-hover);
+      text-decoration: underline;
+    }
+  }
+}
+
+.captchaWrapper {
+  display: flex;
+  gap: space(1);
+  align-items: center;
+  
+  .captchaImage {
+    @include flex-center;
+    background: var(--border-color);
+    border-radius: $border-radius-base;
+    width: 120px;
+    height: 40px;
+    cursor: pointer;
+    user-select: none;
+    font-family: 'Courier New', monospace;
+    font-weight: bold;
+    letter-spacing: 4px;
+    color: var(--text-main);
+    overflow: hidden;
+    position: relative;
+    
+    &::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(45deg, transparent 45%, rgba(0,0,0,0.1) 50%, transparent 55%);
+      background-size: 10px 10px;
+    }
+  }
+}
+
+// Validation feedback styles
+.validationHint {
+  font-size: $font-size-xs;
+  margin-top: space(0.5);
+  display: flex;
+  align-items: center;
+  gap: space(0.5);
+  
+  &.success { color: var(--color-success); }
+  &.error { color: var(--color-error); }
+  &.warning { color: var(--color-warning); }
+}
+
+.staggeredReveal > div {
+  @include staggered-reveal(6);
 }

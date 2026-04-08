@@ -1,20 +1,22 @@
-import React, { FC, useEffect } from 'react'
+import React, { FC, useEffect, useState, useMemo } from 'react'
 import { useNavigate, Link } from 'react-router-dom'
-import { Typography, Space, Form, Input, Button, Checkbox, message } from 'antd'
-import { UserAddOutlined } from '@ant-design/icons'
+import { Typography, Space, Form, Input, Button, Checkbox, message, ConfigProvider, theme as antTheme } from 'antd'
+import { UserOutlined, LockOutlined, SafetyCertificateOutlined, BulbOutlined, BulbFilled } from '@ant-design/icons'
 import { useRequest } from 'ahooks'
 import { useDispatch } from 'react-redux'
 import { REGISTER_PATHNAME, MANAGE_INDEX_PATHNAME } from '../router'
 import { loginService, getUserInfoService } from '../services/user'
 import { setToken } from '../utils/user-token'
 import { loginReducer } from '../store/userReducer'
+import useTheme from '../hooks/useTheme'
 import styles from './Login.module.scss'
 
-const { Title } = Typography
+const { Title, Text } = Typography
 
 const USERNAME_KEY = 'USERNAME'
 const PASSWORD_KEY = 'PASSWORD'
 
+// --- Helpers ---
 function rememberUser(username: string, password: string) {
   localStorage.setItem(USERNAME_KEY, username)
   localStorage.setItem(PASSWORD_KEY, password)
@@ -32,18 +34,24 @@ function getUserInfoFromStorage() {
   }
 }
 
+// Simple captcha generator
+const generateCaptcha = () => Math.random().toString(36).substring(2, 6).toUpperCase()
+
 const Login: FC = () => {
   const nav = useNavigate()
   const dispatch = useDispatch()
+  const { theme: appTheme, toggleTheme } = useTheme()
+  const [form] = Form.useForm()
+  const [captcha, setCaptcha] = useState(generateCaptcha())
 
-  const [form] = Form.useForm() // 第三方 hook
-
+  // --- Effects ---
   useEffect(() => {
     const { username, password } = getUserInfoFromStorage()
     form.setFieldsValue({ username, password })
-  }, [])
+  }, [form])
 
-  const { run } = useRequest(
+  // --- Request ---
+  const { run, loading } = useRequest(
     async (username: string, password: string) => {
       const data = await loginService(username, password)
       return data
@@ -52,22 +60,35 @@ const Login: FC = () => {
       manual: true,
       async onSuccess(result) {
         const { token = '' } = result
-        setToken(token) // 存储 token
+        setToken(token)
 
-        // 关键：登录成功后，立即获取用户信息并存入 Redux
-        const { username, nickname } = await getUserInfoService()
-        dispatch(loginReducer({ username, nickname })) // 存储到 redux store
-
-        message.success('登录成功')
-        nav(MANAGE_INDEX_PATHNAME) // 导航到“我的问卷”
+        try {
+          const { username, nickname } = await getUserInfoService()
+          dispatch(loginReducer({ username, nickname }))
+          message.success('登录成功')
+          nav(MANAGE_INDEX_PATHNAME)
+        } catch (err) {
+          message.error('获取用户信息失败')
+        }
       },
+      onError(err: any) {
+        message.error(err.message || '登录失败，请检查用户名或密码')
+        setCaptcha(generateCaptcha()) // Refresh captcha on error
+      }
     }
   )
 
+  // --- Handlers ---
   const onFinish = (values: any) => {
-    const { username, password, remember } = values || {}
+    const { username, password, remember, captchaInput = '' } = values || {}
 
-    run(username, password) // 执行 ajax
+    if (captchaInput.toUpperCase() !== captcha) {
+      message.error('验证码错误')
+      setCaptcha(generateCaptcha())
+      return
+    }
+
+    run(username, password)
 
     if (remember) {
       rememberUser(username, password)
@@ -76,56 +97,93 @@ const Login: FC = () => {
     }
   }
 
+  // --- Render ---
   return (
-    <div className={styles.container}>
-      <div>
-        <Space>
-          <Title level={2}>
-            <UserAddOutlined />
-          </Title>
-          <Title level={2}>用户登录</Title>
-        </Space>
-      </div>
-      <div>
-        <Form
-          labelCol={{ span: 6 }}
-          wrapperCol={{ span: 16 }}
-          initialValues={{ remember: true }}
-          onFinish={onFinish}
-          form={form}
-        >
-          <Form.Item
-            label="用户名"
-            name="username"
-            rules={[
-              { required: true, message: '请输入用户名' },
-              { type: 'string', min: 5, max: 20, message: '字符长度在 5-20 之间' },
-              { pattern: /^\w+$/, message: '只能是字母数字下划线' },
-            ]}
+    <ConfigProvider
+      theme={{
+        algorithm: appTheme === 'dark' ? antTheme.darkAlgorithm : antTheme.defaultAlgorithm,
+        token: {
+          colorPrimary: '#4f46e5',
+          borderRadius: 8,
+        },
+      }}
+    >
+      <div className={styles.pageWrapper}>
+        <Button 
+          className={styles.themeToggle} 
+          icon={appTheme === 'dark' ? <BulbOutlined /> : <BulbFilled />} 
+          onClick={toggleTheme}
+          shape="circle"
+          aria-label={appTheme === 'dark' ? '切换为亮色模式' : '切换为暗色模式'}
+        />
+        
+        <div className={`${styles.loginCard} ${styles.staggeredReveal}`}>
+          <header>
+            <Title level={2}>欢迎回来</Title>
+            <Text>请登录您的账户以管理问卷</Text>
+          </header>
+
+          <Form
+            layout="vertical"
+            initialValues={{ remember: true }}
+            onFinish={onFinish}
+            form={form}
+            requiredMark={false}
           >
-            <Input />
-          </Form.Item>
-          <Form.Item
-            label="密码"
-            name="password"
-            rules={[{ required: true, message: '请输入密码' }]}
-          >
-            <Input.Password />
-          </Form.Item>
-          <Form.Item name="remember" valuePropName="checked" wrapperCol={{ offset: 6, span: 16 }}>
-            <Checkbox>记住我</Checkbox>
-          </Form.Item>
-          <Form.Item wrapperCol={{ offset: 6, span: 16 }}>
-            <Space>
-              <Button type="primary" htmlType="submit">
-                登录
-              </Button>
-              <Link to={REGISTER_PATHNAME}>注册新用户</Link>
-            </Space>
-          </Form.Item>
-        </Form>
+            <Form.Item
+              label="用户名 / 邮箱"
+              name="username"
+              className={styles.formItem}
+              rules={[
+                { required: true, message: '请输入用户名或邮箱' },
+                { min: 3, message: '长度不能少于 3 个字符' },
+              ]}
+            >
+              <Input prefix={<UserOutlined style={{ color: 'var(--text-muted)' }} />} placeholder="用户名或邮箱" />
+            </Form.Item>
+
+            <Form.Item
+              label="密码"
+              name="password"
+              className={styles.formItem}
+              rules={[{ required: true, message: '请输入密码' }]}
+            >
+              <Input.Password prefix={<LockOutlined style={{ color: 'var(--text-muted)' }} />} placeholder="您的密码" />
+            </Form.Item>
+
+            <Form.Item
+              label="验证码"
+              name="captchaInput"
+              className={styles.formItem}
+              rules={[{ required: true, message: '请输入验证码' }]}
+            >
+              <div className={styles.captchaWrapper}>
+                <Input prefix={<SafetyCertificateOutlined style={{ color: 'var(--text-muted)' }} />} placeholder="验证码" />
+                <div className={styles.captchaImage} onClick={() => setCaptcha(generateCaptcha())} title="点击刷新">
+                  {captcha}
+                </div>
+              </div>
+            </Form.Item>
+
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '24px' }}>
+              <Form.Item name="remember" valuePropName="checked" noStyle>
+                <Checkbox>记住我</Checkbox>
+              </Form.Item>
+              <Link to="/forgot-password" style={{ fontSize: '14px', color: 'var(--color-primary)' }}>忘记密码？</Link>
+            </div>
+
+            <Button type="primary" htmlType="submit" className={styles.submitBtn} loading={loading}>
+              登录
+            </Button>
+
+            <div className={styles.footerLinks}>
+              <Text type="secondary">还没有账户？</Text>
+              <Link to={REGISTER_PATHNAME}>立即注册</Link>
+            </div>
+          </Form>
+        </div>
       </div>
-    </div>
+    </ConfigProvider>
   )
 }
 
