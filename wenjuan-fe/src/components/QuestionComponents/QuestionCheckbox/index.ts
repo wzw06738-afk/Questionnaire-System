@@ -1,6 +1,5 @@
 /**
  * @description 问卷 checkbox
- * @author 吴卫哲
  */
 
 import Component from './Component'
@@ -12,7 +11,7 @@ export * from './interface'
 
 export default {
   title: '多选',
-  type: 'questionCheckbox', // 要和后端统一好
+  type: 'questionCheckbox',
   Component,
   PropComponent,
   StatComponent,

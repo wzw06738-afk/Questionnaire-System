@@ -12,8 +12,8 @@ import { JwtStrategy } from './jwt.strategy';
     MongooseModule.forFeature([{ name: User.name, schema: UserSchema }]),
     PassportModule,
     JwtModule.register({
-      secret: 'secretKey', // 在生产环境中应该使用环境变量
-      signOptions: { expiresIn: '24h' },
+      secret: 'secretKey', // 用于签名和验证的密钥
+      signOptions: { expiresIn: '24h' },  // Token 有效期
     }),
   ],
   providers: [AuthService, JwtStrategy],

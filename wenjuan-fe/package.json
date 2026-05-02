@@ -43,7 +43,7 @@
     "eject": "react-scripts eject",
     "lint": " eslint 'src/**/*.+(js|ts|jsx|tsx)' ",
     "format": " prettier --write 'src/**/*.+(js|ts|jsx|tsx)' ",
-    "prepare": "husky install",
+    "prepare": "git rev-parse --show-toplevel >/dev/null 2>&1 && husky install || true",
     "analyze": "source-map-explorer 'build/static/js/*.js'"
   },
   "jest": {

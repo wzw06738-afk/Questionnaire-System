@@ -1,6 +1,5 @@
 /**
  * @description 问卷 radio
- * @author 吴卫哲
  */
 
 import Component from './Component'

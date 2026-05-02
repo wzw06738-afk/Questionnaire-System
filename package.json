@@ -1,6 +1,24 @@
 {
-  "dependencies": {
-    "@ant-design/icons": "^6.1.1",
-    "exa-mcp-server": "^3.2.0"
+  "name": "wenjuan-system",
+  "version": "1.0.0",
+  "private": true,
+  "workspaces": [
+    "wenjuan-server",
+    "wenjuan-fe",
+    "wenjuan-client"
+  ],
+  "scripts": {
+    "sync-config": "node scripts/sync-config.js",
+    "start": "npm run sync-config && concurrently -n server,fe,client -c blue,green,yellow \"npm run start:server\" \"npm run start:fe\" \"npm run start:client\"",
+    "start:server": "cd wenjuan-server && npm run start:dev",
+    "start:fe": "cd wenjuan-fe && npm start",
+    "start:client": "cd wenjuan-client && npm run dev",
+    "build": "npm run build:server && npm run build:fe && npm run build:client",
+    "build:server": "cd wenjuan-server && npm run build",
+    "build:fe": "cd wenjuan-fe && npm run build",
+    "build:client": "cd wenjuan-client && npm run build"
+  },
+  "devDependencies": {
+    "concurrently": "^8.2.2"
   }
 }

@@ -1,6 +1,5 @@
 /**
  * @description 问卷 info 组件
- * @author 吴卫哲
  */
 
 import Component from './Component'
