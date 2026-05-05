@@ -30,3 +30,8 @@ desktop.ini
 
 # VS Code (already deleted by user request, but good to ignore)
 .vscode/
+
+# Internal dev files (not useful for public repo)
+CLAUDE.md
+GLOBAL_CONFIG.json
+scripts/

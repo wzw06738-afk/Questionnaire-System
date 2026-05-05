@@ -49,9 +49,17 @@ scripts/           # Config sync utility (LAN_IP → .env files)
 - Node.js v16+
 - MongoDB running on `127.0.0.1:27017`
 
-### 1. Configure network
+### 1. Configure environment
 
-Edit `GLOBAL_CONFIG.json` at the project root — set `LAN_IP` to your local IP (find it via `ipconfig` / `ifconfig`). This value is auto-synced to each sub-project's `.env` on startup.
+Each sub-project has a `.env.example`. Copy them and fill in your local IP:
+
+```bash
+cd wenjuan-server && cp .env.example .env
+cd wenjuan-fe && cp .env.example .env
+cd wenjuan-client && cp .env.example .env
+```
+
+Set `LAN_IP` / `REACT_APP_LAN_IP` / `NEXT_PUBLIC_LAN_IP` to your local IP (`ipconfig` / `ifconfig`). Set `JWT_SECRET` to a long random string.
 
 ### 2. Start the backend
 
