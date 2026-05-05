@@ -8,7 +8,6 @@ export class QuestionService {
   constructor(@InjectModel(Question.name) private questionModel: Model<Question>) {}
 
   async create(author: string) {
-    console.log('Creating question for author:', author);
     const question = new this.questionModel({
       title: '问卷标题',
       desc: '问卷描述',
@@ -22,21 +21,13 @@ export class QuestionService {
         },
       ],
     });
-    try {
-      const savedQuestion = await question.save();
-      console.log('Question created successfully:', savedQuestion._id);
-      return savedQuestion;
-    } catch (err) {
-      console.error('Error creating question:', err);
-      throw err;
-    }
+    return question.save();
   }
 
   async findAll(
     author: string,
     query: { keyword?: string; isStar?: boolean; isDeleted?: boolean; page?: number; pageSize?: number },
   ) {
-    console.log('Finding all questions for author:', author, 'with query:', query);
     const { keyword, isStar, isDeleted, page = 1, pageSize = 10 } = query;
     const filter: any = { author, isDeleted: !!isDeleted };
     if (isStar) filter.isStar = true;
@@ -44,22 +35,14 @@ export class QuestionService {
       filter.title = { $regex: keyword, $options: 'i' };
     }
 
-    console.log('Query filter:', filter);
+    const list = await this.questionModel
+      .find(filter)
+      .sort({ updatedAt: -1 })
+      .skip((page - 1) * pageSize)
+      .limit(pageSize);
 
-    try {
-      const list = await this.questionModel
-        .find(filter)
-        .sort({ updatedAt: -1 })
-        .skip((page - 1) * pageSize)
-        .limit(pageSize);
-
-      const total = await this.questionModel.countDocuments(filter);
-      console.log('Found questions:', list.length, 'Total count:', total);
-      return { list, total };
-    } catch (err) {
-      console.error('Error finding questions:', err);
-      throw err;
-    }
+    const total = await this.questionModel.countDocuments(filter);
+    return { list, total };
   }
 
   async findOne(id: string) {

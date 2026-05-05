@@ -14,24 +14,18 @@ import styles from './Login.module.scss'
 const { Title, Text } = Typography
 
 const USERNAME_KEY = 'USERNAME'
-const PASSWORD_KEY = 'PASSWORD'
 
 // --- Helpers ---
-function rememberUser(username: string, password: string) {
+function rememberUser(username: string) {
   localStorage.setItem(USERNAME_KEY, username)
-  localStorage.setItem(PASSWORD_KEY, password)
 }
 
 function deleteUserFromStorage() {
   localStorage.removeItem(USERNAME_KEY)
-  localStorage.removeItem(PASSWORD_KEY)
 }
 
-function getUserInfoFromStorage() {
-  return {
-    username: localStorage.getItem(USERNAME_KEY),
-    password: localStorage.getItem(PASSWORD_KEY),
-  }
+function getUsernameFromStorage() {
+  return localStorage.getItem(USERNAME_KEY)
 }
 
 // Simple captcha generator
@@ -46,8 +40,8 @@ const Login: FC = () => {
 
   // --- Effects ---
   useEffect(() => {
-    const { username, password } = getUserInfoFromStorage()
-    form.setFieldsValue({ username, password })
+    const username = getUsernameFromStorage()
+    form.setFieldsValue({ username })
   }, [form])
 
   // --- Request ---
@@ -91,7 +85,7 @@ const Login: FC = () => {
     run(username, password)
 
     if (remember) {
-      rememberUser(username, password)
+      rememberUser(username)
     } else {
       deleteUserFromStorage()
     }

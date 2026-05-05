@@ -1,86 +1,127 @@
-# 小w问卷 - 问卷系统
+#  - Survey System
 
-本项目是一个问卷的全栈项目，包含管理端（B端）、填写端（C端）以及配套的 NestJS 后端和 MongoDB 数据库。
+A full-stack questionnaire / survey platform with an admin panel (B端), a public-facing H5 form (C端), and a NestJS backend.
 
-## 🏗️ 项目架构
+## Screenshots
 
-项目采用多包（Monorepo）结构管理：
+| Login | Survey Editor |
+|---|---|
+| ![Login](https://github.com/user-attachments/assets/458094ea-f1bf-4255-aba2-9fef6014444d) | ![Editor](https://github.com/user-attachments/assets/3a1d1e9f-f788-465a-a77f-7d58c215c918) |
 
-- **`wenjuan-fe`**: 管理端（B端）。基于 React + Ant Design + Redux Toolkit 构建。支持问卷编辑（拖拽、属性修改）、发布、统计查看等功能。
-- **`wenjuan-client`**: 填写端（C端）。基于 Next.js 构建，负责问卷的 H5 展示和答卷提交。
-- **`wenjuan-server`**: 后端服务。基于 NestJS + Mongoose 构建，提供 RESTful API，处理用户认证 (JWT)、问卷 CRUD、答卷收集及统计逻辑。
-- **`wenjuan-mock`**: 早期开发使用的 Mock 服务。
+| PC Form | Mobile Form | Statistics |
+|---|---|---|
+| ![PC](https://github.com/user-attachments/assets/8586e633-fd19-4781-8870-aa000d2906e8) | ![Mobile](https://github.com/user-attachments/assets/5dab7bca-51c0-4215-b5f9-cc63cf0c7c99) | ![Stats](https://github.com/user-attachments/assets/45046991-f97b-4a2d-856b-c25c65db457f) |
 
-## 🚀 快速开始
+## Tech Stack
 
-### 1. 配置网络 (重点)
-本项目支持一键配置局域网 IP。当您切换 WiFi 或网络环境时，只需修改根目录下的 `GLOBAL_CONFIG.json` 文件：
+| Layer | Tech |
+|---|---|
+| Admin Panel (B端) | React 18, TypeScript, Ant Design 5, Redux Toolkit, react-router-dom v6, @dnd-kit, recharts, SCSS Modules |
+| Public Form (C端) | Next.js 13 (Pages Router), TypeScript, SCSS Modules |
+| Backend | NestJS 9, Mongoose 6, JWT (Passport), bcryptjs |
+| Database | MongoDB |
+| Tooling | ESLint, Prettier, Husky, commitlint |
 
-1. 打开根目录下的 [GLOBAL_CONFIG.json](file:///d%3A/%E9%97%AE%E5%8D%B7%E7%B3%BB%E7%BB%9F/GLOBAL_CONFIG.json)。
-2. 将 `LAN_IP` 修改为您当前的局域网 IP（可通过 `ipconfig` 查看）。
-3. 启动项目时，系统会自动同步该配置到所有子模块。
+## Project Structure
 
-### 2. 准备工作
-确保本地已安装并启动以下环境：
-- **Node.js** (推荐 v16+)
-- **MongoDB** (默认端口 27017，推荐绑定到 `127.0.0.1`)
+```
+wenjuan-server/    # REST API — auth, question CRUD, answer collection, statistics
+wenjuan-fe/        # Admin SPA — drag-and-drop editor, publish, stats dashboard
+wenjuan-client/    # Public H5 form — SSR via Next.js, native form POST
+scripts/           # Config sync utility (LAN_IP → .env files)
+```
 
-### 3. 启动后端 (wenjuan-server)
+## Features
+
+- **Drag-and-drop editor** — build surveys with text, input, textarea, radio, and checkbox components
+- **Component layering** — show/hide, lock, reorder, copy, and delete components
+- **Undo / Redo** — 20-step history powered by redux-undo
+- **One-click publish** — generates a LAN-accessible URL and QR code
+- **Answer collection** — mobile-friendly H5 form, native form submission
+- **Statistics dashboard** — answer counts, per-component distribution charts, answer list
+- **Auth** — JWT-based register/login with bcrypt password hashing
+- **Dark mode** — toggle on the login page
+
+## Quick Start
+
+### Prerequisites
+
+- Node.js v16+
+- MongoDB running on `127.0.0.1:27017`
+
+### 1. Configure network
+
+Edit `GLOBAL_CONFIG.json` at the project root — set `LAN_IP` to your local IP (find it via `ipconfig` / `ifconfig`). This value is auto-synced to each sub-project's `.env` on startup.
+
+### 2. Start the backend
+
 ```bash
 cd wenjuan-server
+cp .env.example .env        # then edit values if needed
 npm install
-npm run start
+npm run start:dev
 ```
-后端将根据配置运行在 `http://<LAN_IP>:3005`。
 
-### 4. 启动管理端 (wenjuan-fe)
+API runs at `http://<LAN_IP>:3005`.
+
+### 3. Start the admin panel
+
 ```bash
 cd wenjuan-fe
+cp .env.example .env
 npm install
 npm start
 ```
-管理端将根据配置运行在 `http://<LAN_IP>:8000`。
 
-### 5. 启动填写端 (wenjuan-client)
+Admin runs at `http://<LAN_IP>:8000`.
+
+### 4. Start the public form
+
 ```bash
 cd wenjuan-client
+cp .env.example .env
 npm install
 npm run dev
 ```
-填写端将根据配置运行在 `http://<LAN_IP>:3000`。
 
-## 🛠️ 核心功能
+Public form runs at `http://<LAN_IP>:3000`.
 
-- **问卷编辑器**：支持多种组件（输入框、单选、多选、段落等）的实时编辑、样式调整、图层管理。
-- **发布系统**：一键发布问卷，自动生成局域网可访问的 URL 和二维码。
-- **答卷收集**：H5 适配的填写页面，支持原生表单提交，数据实时存入 MongoDB。
-- **数据统计**：可视化展示答卷数量，提供单项组件的数据分布分析及答卷列表详情。
-- **权限管理**：基于 JWT 的登录注册体系，确保问卷数据的私密性与安全性。
+## API Overview
 
-## 📝 开发者备注
+All endpoints are prefixed with `/api/`. Response format:
 
-- **局域网测试**：目前发布 URL 已配置为您的局域网 IP (`192.168.0.151`)，确保同一 WiFi 下的移动设备可以扫码测试。
-- **数据库查看**：推荐使用 **MongoDB Compass** 连接 `mongodb://192.168.0.151:27017` 查看 `wenjuan` 数据库下的 `users`、`questions` 和 `answers` 集合。
+```json
+// success
+{ "errno": 0, "data": { ... } }
+// error
+{ "errno": -1, "msg": "error message" }
+```
 
+| Method | Endpoint | Auth | Description |
+|---|---|---|---|
+| POST | `/api/user/register` | No | Register |
+| POST | `/api/user/login` | No | Login, returns JWT |
+| GET | `/api/user/info` | Yes | Get current user |
+| POST | `/api/question` | Yes | Create a survey |
+| GET | `/api/question` | Yes | List surveys (paginated) |
+| GET | `/api/question/:id` | No | Get survey by ID |
+| PATCH | `/api/question/:id` | Yes | Update survey |
+| POST | `/api/answer` | No | Submit an answer |
+| GET | `/api/answer/:questionId` | Yes | List answers |
+| GET | `/api/stat/:questionId` | Yes | Get statistics |
 
-## 展示结果
-**登录页面（H5）展示：**
-<img width="2552" height="1296" alt="屏幕截图 2026-03-28 134954" src="https://github.com/user-attachments/assets/458094ea-f1bf-4255-aba2-9fef6014444d" />
+## Environment Variables
 
+Each sub-project has a `.env.example` — copy it to `.env` and fill in values:
 
-**问卷管理页面展示：**
-<img width="2557" height="1298" alt="屏幕截图 2026-03-28 135116" src="https://github.com/user-attachments/assets/3a1d1e9f-f788-465a-a77f-7d58c215c918" />
+| Variable | Where | Description |
+|---|---|---|
+| `LAN_IP` | server | LAN IP for display |
+| `JWT_SECRET` | server | JWT signing secret |
+| `MONGO_URI` | server | MongoDB connection string |
+| `REACT_APP_LAN_IP` | admin | LAN IP for API proxy |
+| `NEXT_PUBLIC_LAN_IP` | client | LAN IP for SSR fetch |
 
+## License
 
-**pc端填写问卷页面（H5）展示：**
-<img width="2559" height="1366" alt="屏幕截图 2026-03-28 110634" src="https://github.com/user-attachments/assets/8586e633-fd19-4781-8870-aa000d2906e8" />
-
-
-**移动端填写问卷页面（H5）展示：**
-<img width="1179" height="2556" alt="IMG_2998" src="https://github.com/user-attachments/assets/5dab7bca-51c0-4215-b5f9-cc63cf0c7c99" />
-
-
-**问卷统计页面展示：**
-<img width="2554" height="1301" alt="image" src="https://github.com/user-attachments/assets/45046991-f97b-4a2d-856b-c25c65db457f" />
-
-
+[MIT](./LICENSE)

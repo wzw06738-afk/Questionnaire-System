@@ -21,8 +21,6 @@ type PropsType = {
 export default function Question(props: PropsType) {
   const { errno, data, msg = '' } = props
 
-  console.log('Client Question component render, props:', props)
-
   // 数据错误
   if (errno !== 0) {
     return <PageWrapper title="错误">

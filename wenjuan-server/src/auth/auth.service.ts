@@ -13,7 +13,6 @@ export class AuthService {
   ) {}
 
   async register(username: string, password: string, nickname?: string) {
-    console.log('Registering user:', username);
     const existingUser = await this.userModel.findOne({ username });
     if (existingUser) {
       throw new ConflictException('用户名已存在');
@@ -24,14 +23,7 @@ export class AuthService {
       password: hashedPassword,
       nickname,
     });
-    try {
-      const savedUser = await user.save();
-      console.log('User registered successfully:', savedUser.username);
-      return savedUser;
-    } catch (err) {
-      console.error('Error registering user:', err);
-      throw err;
-    }
+    return user.save();
   }
 
   async login(username: string, password: string) {

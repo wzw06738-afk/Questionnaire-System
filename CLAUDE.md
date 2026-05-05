@@ -4,14 +4,13 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## 项目概述
 
-"小w问卷" — 一个问卷调查系统，包含四个子项目的手动 monorepo 结构：
+"小w问卷" — 一个问卷调查系统，包含三个子项目的手动 monorepo 结构：
 
 | 目录 | 用途 | 端口 |
 |---|---|---|
 | `wenjuan-server/` | NestJS 后端 API | 3005 |
 | `wenjuan-fe/` | B 端管理后台（React SPA） | 8000 |
 | `wenjuan-client/` | C 端问卷填写页（Next.js H5） | 3000 |
-| `wenjuan-mock/` | Koa mock 服务器（已被真实后端取代） | 3001 |
 
 ## 常用命令
 
@@ -67,7 +66,7 @@ cd wenjuan-client && npm run build           # Next.js 生产构建
 
 ### 认证
 
-JWT（secret 硬编码为 `'secretKey'`，24h 过期）。密码用 bcryptjs（10 轮 salt）。`JwtAuthGuard` 保护需要认证的路由，`GET /api/question/:id` 和 `POST /api/answer` 是公开路由。
+JWT（secret 通过环境变量 `JWT_SECRET` 配置，24h 过期）。密码用 bcryptjs（10 轮 salt）。`JwtAuthGuard` 保护需要认证的路由，`GET /api/question/:id` 和 `POST /api/answer` 是公开路由。
 
 ### 状态管理
 

@@ -23,19 +23,16 @@ export default async function handler(
   res: NextApiResponse
 ) {
   if (req.method !== 'POST') {
-    // 不是 post 则返回错误
     res.status(200).json({ errno: -1, msg: 'Method 错误' })
+    return
   }
 
   // 获取并格式化表单数据
   const answerInfo = genAnswerInfo(req.body)
 
-  console.log('answerInfo', answerInfo)
-
   try {
     // 提交到服务端 NestJS
     const resData = await postAnswer(answerInfo)
-    console.log('resData from server', resData) // 增加日志方便调试
     if (resData.errno === 0) {
       // 如果提交成功了
       res.redirect('/success')
@@ -45,9 +42,6 @@ export default async function handler(
       res.redirect('/fail')
     }
   } catch (err) {
-    console.error('Submit error:', err)
     res.redirect('/fail')
   }
-
-  // res.status(200).json({ errno: 0 })
 }

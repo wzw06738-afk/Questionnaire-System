@@ -8,16 +8,8 @@ export class AnswerService {
   constructor(@InjectModel(Answer.name) private answerModel: Model<Answer>) {}
 
   async create(answerData: any) {
-    console.log('answerData to be saved:', answerData);
     const answer = new this.answerModel(answerData);
-    try {
-      const savedAnswer = await answer.save();
-      console.log('savedAnswer success:', savedAnswer);
-      return savedAnswer;
-    } catch (err) {
-      console.error('save answer error:', err);
-      throw err;
-    }
+    return answer.save();
   }
 
   async findAll(questionId: string, query: { page?: number; pageSize?: number }) {

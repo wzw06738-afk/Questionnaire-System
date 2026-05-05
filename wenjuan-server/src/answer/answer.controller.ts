@@ -8,7 +8,6 @@ export class AnswerController {
 
   @Post()
   async create(@Body() body: any) {
-    console.log('Received body from client:', body); // 增加日志查看原始数据
     await this.answerService.create(body);
     return { errno: 0 };
   }

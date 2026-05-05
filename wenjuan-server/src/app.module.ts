@@ -7,7 +7,7 @@ import { StatModule } from './stat/stat.module';
 
 @Module({
   imports: [
-    MongooseModule.forRoot('mongodb://127.0.0.1:27017/wenjuan'), // 本地 MongoDB
+    MongooseModule.forRoot(process.env.MONGO_URI || 'mongodb://127.0.0.1:27017/wenjuan'),
     AuthModule,
     QuestionModule,
     AnswerModule,

@@ -12,7 +12,7 @@ import { JwtStrategy } from './jwt.strategy';
     MongooseModule.forFeature([{ name: User.name, schema: UserSchema }]),
     PassportModule,
     JwtModule.register({
-      secret: 'secretKey', // 用于签名和验证的密钥
+      secret: process.env.JWT_SECRET || 'change-me-in-production',
       signOptions: { expiresIn: '24h' },  // Token 有效期
     }),
   ],
