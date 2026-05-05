@@ -1,17 +1,70 @@
+@import '../styles/theme';
+@import '../styles/mixins';
+
 .container {
-    height: calc(100vh - 64px - 65px);
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    background-image: linear-gradient(to right, #4facfe 0%, #00f2fe 100%);
+  min-height: calc(100vh - 64px - 65px);
+  @include flex-center;
+  position: relative;
+  overflow: hidden;
+  background: var(--bg-main);
 
-    .info {
-        text-align: center;
+  &::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle at 20% 30%, rgba(79, 70, 229, 0.15) 0%, transparent 40%),
+                radial-gradient(circle at 80% 70%, rgba(16, 185, 129, 0.1) 0%, transparent 40%),
+                radial-gradient(circle at 50% 50%, rgba(99, 102, 241, 0.1) 0%, transparent 60%);
+    animation: backgroundMove 20s linear infinite;
+    z-index: 0;
+  }
+}
 
-        button {
-            height: 60px;
-            font-size: 24px;
-        }
+@keyframes backgroundMove {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.info {
+  text-align: center;
+  z-index: 2;
+  position: relative;
+  @include glassmorphism;
+  padding: space(8) space(10);
+  border-radius: $border-radius-xl;
+  box-shadow: var(--shadow-xl);
+
+  h1 {
+    color: var(--text-main);
+    font-family: $font-family-display;
+    font-weight: 700;
+    margin-bottom: space(2);
+  }
+
+  p {
+    color: var(--text-secondary);
+    font-size: $font-size-lg;
+    margin-bottom: space(5);
+  }
+
+  button {
+    height: 48px;
+    font-size: $font-size-base;
+    font-weight: 600;
+    padding: 0 space(8);
+    background: var(--color-primary);
+    border: none;
+    border-radius: $border-radius-base;
+    box-shadow: 0 4px 12px var(--color-primary-glow);
+    @include transition(all);
+
+    &:hover {
+      background: var(--color-primary-hover) !important;
+      transform: translateY(-2px);
+      box-shadow: 0 6px 16px var(--color-primary-glow);
     }
+  }
 }

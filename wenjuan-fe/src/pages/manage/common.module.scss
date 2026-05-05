@@ -1,21 +1,26 @@
+@import '../../styles/theme';
+@import '../../styles/mixins';
+
 .header {
-    display: flex;
-    margin-bottom: 20px;
+  display: flex;
+  margin-bottom: space(2.5);
 
-    .left {
-        flex: 1;
-    }
+  .left {
+    flex: 1;
+  }
 
-    .right {
-        flex: 1;
-        text-align: right;
-    }
+  .right {
+    flex: 1;
+    text-align: right;
+  }
 }
 
 .content {
-    margin-bottom: 20px;
+  margin-bottom: space(2.5);
 }
 
 .footer {
-    text-align: center;
+  text-align: center;
+  color: var(--text-secondary);
+  font-size: $font-size-sm;
 }

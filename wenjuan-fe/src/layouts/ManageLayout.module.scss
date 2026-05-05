@@ -1,15 +1,18 @@
+@import '../styles/theme';
+@import '../styles/mixins';
+
 .container {
-    padding: 24px 0;
-    width: 1200px;
-    margin: 0 auto;
-    display: flex;
+  padding: space(3) 0;
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
 }
 
 .left {
-    width: 120px;
+  width: 120px;
 }
 
 .right {
-    flex: 1;
-    margin-left: 60px;
+  flex: 1;
+  margin-left: space(7);
 }

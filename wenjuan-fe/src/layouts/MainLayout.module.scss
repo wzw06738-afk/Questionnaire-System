@@ -1,21 +1,30 @@
+@import '../styles/theme';
+@import '../styles/mixins';
+
 .header {
-    padding: 0 24px;
+  padding: 0 space(3);
+  background: var(--bg-card) !important;
+  border-bottom: 1px solid var(--border-color) !important;
+  backdrop-filter: blur(8px);
 
-    .left {
-        float: left;
-    }
+  .left {
+    float: left;
+  }
 
-    .right {
-        float: right
-    }
+  .right {
+    float: right;
+  }
 }
 
 .main {
-    min-height: calc(100vh - 64px - 65px);
+  min-height: calc(100vh - 64px - 65px);
+  background: var(--bg-main);
 }
 
 .footer {
-    text-align: center;
-    background-color: #f7f7f7;
-    border-top: 1px solid #e8e8e8;
+  text-align: center;
+  background: var(--bg-card);
+  border-top: 1px solid var(--border-color);
+  color: var(--text-secondary);
+  font-size: $font-size-sm;
 }

@@ -1,30 +1,35 @@
+@import '../../../styles/theme';
+@import '../../../styles/mixins';
+
 .header-wrapper {
-    background-color: #fff;
-    border-bottom: 1px solid #e8e8e8;
-    padding: 12px 0;
+  background-color: var(--bg-card);
+  border-bottom: 1px solid var(--border-color);
+  padding: space(1.5) 0;
 }
 
 .header {
-    display: flex;
-    margin: 0 24px;
+  display: flex;
+  margin: 0 space(3);
 
-    .left {
-        flex: 1;
+  h1 {
+    font-size: $font-size-lg;
+    margin-bottom: 0;
+    line-height: 1;
+    color: var(--text-main);
+    font-weight: 600;
+  }
 
-        h1 {
-            font-size: 18px;
-            margin-bottom: 0;
-            line-height: 1;
-        }
-    }
+  .left {
+    flex: 1;
+  }
 
-    .right {
-        flex: 1;
-        text-align: right;
-    }
+  .main {
+    flex: 1;
+    text-align: center;
+  }
 
-    .main {
-        flex: 1;
-        text-align: center;
-    }
+  .right {
+    flex: 1;
+    text-align: right;
+  }
 }

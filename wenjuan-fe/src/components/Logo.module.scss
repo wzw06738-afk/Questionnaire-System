@@ -1,11 +1,18 @@
-.container {
-    width: 200px;
-    margin: 12px 0;
-    line-height: 1;
-    text-align: center;
+@import '../styles/theme';
 
-    h1 {
-        font-size: 32px;
-        color: #f7f7f7;
-    }
+.container {
+  width: 200px;
+  margin: 12px 0;
+  line-height: 1;
+  text-align: center;
+
+  h1 {
+    font-size: 24px;
+    color: var(--text-main);
+    margin-bottom: 0;
+  }
+
+  a {
+    text-decoration: none;
+  }
 }

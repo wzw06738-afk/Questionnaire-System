@@ -1,11 +1,29 @@
 .textAreaWrapper {
   margin-bottom: 16px;
-  padding: 0 5px;
+  padding: 0 8px;
+
+  p {
+    font-weight: 500;
+    margin-bottom: 8px;
+  }
 
   textarea {
     width: 100%;
-    border: 1px solid #d8d8d8;
-    border-radius: 3px;
-    padding: 6px 12px;
+    border: 1px solid #d1d5db;
+    border-radius: 8px;
+    padding: 10px 14px;
+    font-size: 14px;
+    transition: all 0.2s;
+    outline: none;
+    resize: vertical;
+
+    &:focus {
+      border-color: #4f46e5;
+      box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.1);
+    }
+
+    &::placeholder {
+      color: #9ca3af;
+    }
   }
 }

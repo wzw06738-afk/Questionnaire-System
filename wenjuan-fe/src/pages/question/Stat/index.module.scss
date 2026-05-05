@@ -1,35 +1,42 @@
+@import '../../../styles/theme';
+@import '../../../styles/mixins';
+
 .container {
-    display: flex;
-    flex-direction: column;
-    background-color: #f0f2f5;
-    min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background-color: var(--bg-main);
+  min-height: 100vh;
 }
 
 .content-wrapper {
-    flex: auto;
-    padding: 12px 0;
+  flex: auto;
+  padding: space(1.5) 0;
 }
 
 .content {
-    margin: 0 24px;
-    display: flex;
+  margin: 0 space(3);
+  display: flex;
 
-    .left {
-        width: 350px;
-        margin-right: 24px;
-    }
+  .left {
+    width: 350px;
+    margin-right: space(3);
+  }
 
-    .main {
-        flex: auto;
-        background-color: #fff;
-        padding: 12px 18px;
-    }
+  .main {
+    flex: auto;
+    background-color: var(--bg-card);
+    padding: space(1.5) space(2);
+    border-radius: $border-radius-base;
+    border: 1px solid var(--border-color);
+  }
 
-    .right {
-        width: 400px;
-        margin-left: 24px;
-        background-color: #fff;
-        padding: 12px 18px;
-        overflow: hidden;
-    }
+  .right {
+    width: 400px;
+    margin-left: space(3);
+    background-color: var(--bg-card);
+    padding: space(1.5) space(2);
+    overflow: hidden;
+    border-radius: $border-radius-base;
+    border: 1px solid var(--border-color);
+  }
 }

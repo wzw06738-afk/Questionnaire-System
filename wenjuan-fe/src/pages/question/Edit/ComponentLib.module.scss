@@ -1,16 +1,21 @@
-.wrapper {
-    margin-bottom: 12px;
-    cursor: pointer;
-    background-color: #f7f7f7;
-    border: 1px solid #f7f7f7;
-    padding: 12px;
-    border-radius: 3px;
+@import '../../../styles/theme';
+@import '../../../styles/mixins';
 
-    &:hover {
-        border-color: #d9d9d9;
-    }
+.wrapper {
+  margin-bottom: space(1.5);
+  cursor: pointer;
+  background-color: var(--bg-main);
+  border: 1px solid var(--border-color);
+  padding: space(1.5);
+  border-radius: $border-radius-base;
+  @include transition(all);
+
+  &:hover {
+    border-color: var(--color-primary);
+    box-shadow: var(--shadow-sm);
+  }
 }
 
 .component {
-    pointer-events: none; // 屏蔽鼠标的行为
+  pointer-events: none;
 }

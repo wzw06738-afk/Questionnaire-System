@@ -1,46 +1,54 @@
+@import '../../../styles/theme';
+@import '../../../styles/mixins';
+
 .container {
-    display: flex;
-    flex-direction: column;
-    height: 100vh;
-    background-color: #f0f2f5;
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  background-color: var(--bg-main);
 }
 
 .content-wrapper {
-    flex: auto;
-    padding: 12px 0;
+  flex: auto;
+  padding: space(1.5) 0;
 }
 
 .content {
-    margin: 0 24px;
-    display: flex;
-    height: 100%;
+  margin: 0 space(3);
+  display: flex;
+  height: 100%;
 
-    .left {
-        width: 295px;
-        background-color: #fff;
-        padding: 0 12px;
+  .left {
+    width: 295px;
+    background-color: var(--bg-card);
+    padding: 0 space(1.5);
+    border-radius: $border-radius-base;
+    border: 1px solid var(--border-color);
+  }
+
+  .main {
+    flex: 1;
+    position: relative;
+    overflow: hidden;
+
+    .canvas-wrapper {
+      position: absolute;
+      width: 400px;
+      height: 712px;
+      top: 50%;
+      left: 50%;
+      transform: translateX(-50%) translateY(-50%);
+      overflow: auto;
+      box-shadow: var(--shadow-lg);
+      border-radius: $border-radius-base;
     }
+  }
 
-    .main {
-        flex: 1;
-        position: relative;
-        overflow: hidden;
-
-        .canvas-wrapper {
-            position: absolute;
-            width: 400px;
-            height: 712px;
-            top: 50%;
-            left: 50%;
-            transform: translateX(-50%) translateY(-50%);
-            overflow: auto;
-            box-shadow: 0 2px 10px #0000001f;
-        }
-    }
-
-    .right {
-        width: 300px;
-        background-color: #fff;
-        padding: 0 12px;
-    }
+  .right {
+    width: 300px;
+    background-color: var(--bg-card);
+    padding: 0 space(1.5);
+    border-radius: $border-radius-base;
+    border: 1px solid var(--border-color);
+  }
 }

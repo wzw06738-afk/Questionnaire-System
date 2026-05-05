@@ -54,7 +54,7 @@ const PageStat: FC<PropsType> = (props: PropsType) => {
             setSelectedComponentType(type)
           }}
         >
-          <span style={{ color: fe_id === selectedComponentId ? '#1890ff' : 'inherit' }}>
+          <span style={{ color: fe_id === selectedComponentId ? '#4f46e5' : 'inherit' }}>
             {colTitle}
           </span>
         </div>
